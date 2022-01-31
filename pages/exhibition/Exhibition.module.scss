@@ -1,0 +1,13 @@
+.wrapper {
+  .detail {
+    display: flex;
+    flex-flow: wrap;
+    margin-top: 20px;
+
+    .description {
+      margin-left: 20px;
+      flex: 1;
+      max-width: 800px;
+    }
+  }
+}

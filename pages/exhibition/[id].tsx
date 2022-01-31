@@ -1,18 +1,28 @@
 import { GetStaticProps } from "next";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { api } from "../../api";
+import defaultImage from "../../default-image.jpg";
+import Image from "next/image";
+import { format, parseISO } from "date-fns";
+import { DATE_FORMAT } from "../../constants/date";
+import styles from "./Exhibition.module.scss";
 
 export default function Home({ data: { data } }) {
-  const router = useRouter();
-  const props = router.query;
   return (
-    <div className={"styles.container"}>
-      <Link href="/">
-        <a>Home {data.id}</a>
-      </Link>
-      <div>{data.description}</div>
-      <div>{data.title}</div>
+    <div className={styles.wrapper}>
+      <h1>{data.title}</h1>
+      {`${format(parseISO(data.aic_start_at), DATE_FORMAT)} - ${format(
+        parseISO(data.aic_end_at),
+        DATE_FORMAT
+      )}`}
+      <div className={styles.detail}>
+        <Image
+          width={300}
+          height={300}
+          src={data.image_url || defaultImage}
+          alt={"TODO"}
+        />
+        <p className={styles.description}>{data.description}</p>
+      </div>
     </div>
   );
 }
@@ -20,8 +30,6 @@ export default function Home({ data: { data } }) {
 export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params;
   const data = await api("get", `/exhibitions/${id}`, {});
-  await setTimeout(() => {}, 5000);
-
   return {
     props: {
       data: data.data,
