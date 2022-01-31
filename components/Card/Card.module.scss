@@ -1,0 +1,18 @@
+.wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  width: 400px;
+  height: 400px;
+  cursor: pointer;
+
+  h1 {
+    margin: 0;
+    font-size: 1em;
+    color: #2e2e2e;
+    margin: 10px 0;
+  }
+
+  p {
+    margin: 0;
+  }
+}
