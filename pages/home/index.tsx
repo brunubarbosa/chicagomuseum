@@ -6,6 +6,7 @@ import { format, parseISO } from "date-fns";
 import styles from "./Home.module.scss";
 import { DATE_FORMAT } from "../../constants/date";
 import Button from "../../components/Button";
+import defaultImage from "../../default-image.jpg";
 
 export default function Home() {
   const router = useRouter();
@@ -40,7 +41,7 @@ export default function Home() {
                 >
                   <Card
                     // todo
-                    image={image_url || ""}
+                    image={image_url || defaultImage}
                     description={getExhibitionDateFormated({
                       aic_start_at,
                       aic_end_at,
