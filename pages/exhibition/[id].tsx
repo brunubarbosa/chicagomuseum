@@ -27,7 +27,7 @@ export default function Home({ data }: any) {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params;
-  const data = await api("get", `/exhibitions/${id}`, {}).catch((e) =>
+  const data = await api("get", `/exhibitions/${id}`).catch((e) =>
     console.error(e)
   );
   return {
