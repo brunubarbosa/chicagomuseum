@@ -40,12 +40,5 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export async function getStaticPaths() {
-  const data = (await api("get", "/exhibitions")) as any;
-  const paths = data.data.data?.map((data) => {
-    return {
-      params: { id: data.id.toString() },
-    };
-  });
-
-  return { paths, fallback: "blocking" };
+  return { paths: [], fallback: "blocking" };
 }
