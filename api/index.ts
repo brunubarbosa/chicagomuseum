@@ -9,13 +9,6 @@ export const api = <T>(
   url: string,
   params: any
 ): Promise<AxiosResponse<T>> => {
-  // apiConfig
-  //   .request<T>({
-  //     method,
-  //     url,
-  //     params,
-  //   })
-  //   .then((res) => console.log(res.data));
   return apiConfig.request<T>({
     method,
     url,
@@ -23,8 +16,11 @@ export const api = <T>(
   });
 };
 
-// Define a default query function that will receive the query key
-export const defaultQueryFn = async ({ queryKey }: any): Promise<unknown> => {
+export const defaultQueryFn = async ({
+  queryKey,
+  pageParam = 0,
+}: any): Promise<unknown> => {
+  console.log("---", queryKey[2]);
   const data = await api(queryKey[0], queryKey[1], queryKey[2]);
   return data;
 };
