@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLongArrowAltLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Header = ({ headerData, goBack }) => {
-  console.log(headerData);
   return (
     <>
       <header className={styles.header}>
