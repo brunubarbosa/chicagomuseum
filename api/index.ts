@@ -20,7 +20,6 @@ export const defaultQueryFn = async ({
   queryKey,
   pageParam = 0,
 }: any): Promise<unknown> => {
-  console.log("---", queryKey[2]);
   const data = await api(queryKey[0], queryKey[1], queryKey[2]);
   return data;
 };

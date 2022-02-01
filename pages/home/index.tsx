@@ -2,11 +2,10 @@ import React from "react";
 import Card from "../../components/Card";
 import { useExhibitions } from "../../api/exhibitions";
 import { useRouter } from "next/router";
-import { format, parseISO } from "date-fns";
 import styles from "./Home.module.scss";
-import { DATE_FORMAT } from "../../constants/date";
 import Button from "../../components/Button";
-import defaultImage from "../../default-image.jpg";
+import defaultImage from "../../public/default-image.jpg";
+import { getExhibitionDateFormated } from "../../utils/date";
 
 export default function Home() {
   const router = useRouter();
@@ -14,17 +13,6 @@ export default function Home() {
     useExhibitions();
   const loadMore = () => fetchNextPage();
 
-  const getExhibitionDateFormated = ({ aic_start_at, aic_end_at }) => {
-    const startDate = aic_start_at
-      ? format(parseISO(aic_start_at), DATE_FORMAT)
-      : "-";
-
-    const endDate = aic_end_at
-      ? format(parseISO(aic_end_at), DATE_FORMAT)
-      : "-";
-
-    return `${startDate} - ${endDate}`;
-  };
   if (isLoading) return <p>Loading...</p>;
   return (
     <div className={styles.wrapper}>

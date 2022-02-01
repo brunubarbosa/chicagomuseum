@@ -1,27 +1,24 @@
 import { GetStaticProps } from "next";
 import { api } from "../../api";
-import defaultImage from "../../default-image.jpg";
+import defaultImage from "../../public/default-image.jpg";
 import Image from "next/image";
-import { format, parseISO } from "date-fns";
-import { DATE_FORMAT } from "../../constants/date";
 import styles from "./Exhibition.module.scss";
+import { getExhibitionDateFormated } from "../../utils/date";
 
-export default function Home({ data: { data } }) {
+export default function Home({ data }: any) {
+  const { aic_start_at, aic_end_at, title, image_url, description } = data.data;
   return (
     <div className={styles.wrapper}>
-      <h1>{data.title}</h1>
-      {`${format(parseISO(data.aic_start_at), DATE_FORMAT)} - ${format(
-        parseISO(data.aic_end_at),
-        DATE_FORMAT
-      )}`}
+      <h1>{title}</h1>
+      {getExhibitionDateFormated({ aic_start_at, aic_end_at })}
       <div className={styles.detail}>
         <Image
           width={300}
           height={300}
-          src={data.image_url || defaultImage}
+          src={image_url || defaultImage}
           alt={"TODO"}
         />
-        <p className={styles.description}>{data.description}</p>
+        <p className={styles.description}>{description}</p>
       </div>
     </div>
   );
@@ -29,12 +26,15 @@ export default function Home({ data: { data } }) {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params;
-  const data = await api("get", `/exhibitions/${id}`, {});
+  const data = await api("get", `/exhibitions/${id}`, {}).catch((e) =>
+    console.error(e)
+  );
   return {
     props: {
-      data: data.data,
+      data: data ? data.data : null,
     },
     revalidate: 1000,
+    notFound: !data,
   };
 };
 
