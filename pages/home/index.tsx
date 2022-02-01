@@ -7,6 +7,15 @@ import Button from "../../components/Button";
 import defaultImage from "../../public/default-image.jpg";
 import { getExhibitionDateFormated } from "../../utils/date";
 
+interface ApiDataMock {
+  data: {
+    data: any[];
+  };
+}
+interface PageProps {
+  data: ApiDataMock;
+}
+
 export default function Home() {
   const router = useRouter();
   const { data, isLoading, isFetching, fetchNextPage, isFetchingNextPage } =
@@ -17,9 +26,9 @@ export default function Home() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.gridWrapper}>
-        {/* // TODO */}
+        {/* // TODO: on data coming fro API type axios service removing data statement*/}
         {data?.pages.map((page) => {
-          return page.data.data.map(
+          return (page as ApiDataMock).data.data.map(
             ({ id, image_url, title, aic_start_at, aic_end_at }) => {
               return (
                 <div
@@ -28,7 +37,6 @@ export default function Home() {
                   onClick={() => router.push(`/exhibition/${id}`)}
                 >
                   <Card
-                    // todo
                     image={image_url || defaultImage}
                     description={getExhibitionDateFormated({
                       aic_start_at,

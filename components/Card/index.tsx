@@ -9,7 +9,7 @@ interface CardProps {
 export const Card = ({ image, title, description }: CardProps) => {
   return (
     <div className={styles.wrapper}>
-      <Image width={300} height={300} src={image} alt={"TODO"} />
+      <Image width={300} height={300} src={image} alt={title} />
       <h1>{title}</h1>
       <p>{description}</p>
     </div>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import styles from "./Exhibition.module.scss";
 import { getExhibitionDateFormated } from "../../utils/date";
 
+// API data types should be coming from some external library
 export default function Home({ data }: any) {
   const { aic_start_at, aic_end_at, title, image_url, description } = data.data;
   return (
@@ -16,7 +17,7 @@ export default function Home({ data }: any) {
           width={300}
           height={300}
           src={image_url || defaultImage}
-          alt={"TODO"}
+          alt={description || "Museum photo"}
         />
         <p className={styles.description}>{description}</p>
       </div>
@@ -39,7 +40,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export async function getStaticPaths() {
-  const data = (await api("get", "/exhibitions", {})) as any;
+  const data = (await api("get", "/exhibitions")) as any;
   const paths = data.data.data?.map((data) => {
     return {
       params: { id: data.id.toString() },
